@@ -76,4 +76,3 @@ function embedCLUE(parent, server, app, provenanceGraph) {
         new EmbeddedCLUE(parent, url, resolve);
     });
 }
-//# sourceMappingURL=embed.js.map
