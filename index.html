@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css" id="theme">
+  <style>
+    iframe {
+      position: absolute;
+      left: 5vw;
+      width: 90vw;
+      height: 90vh;
+    }
+  </style>
+</head>
+<body>
+<script src="embed.js"></script>
+<script src="lib/js/head.min.js"></script>
+<script src="lib/js/reveal.js"></script>
+
+<div class="reveal">
+  <!-- Any section element inside of this container is displayed as a slide -->
+  <div class="slides">
+    <section>
+      <h1>Hello CLUE</h1>
+    </section>
+    <section id="clue" style="height: 90vh">
+      <script>
+        const base = document.getElementById('clue');
+        const embedded = embedCLUE(base, 'http://demo.caleydo.org/', 'stratomex_js', 'workspaceForStratomexJsIakat');
+        var s1 = document.createElement('b');
+        s1.classList.add('fragment');
+        base.appendChild(s1);
+        var s2 = document.createElement('b');
+        s2.classList.add('fragment');
+        base.appendChild(s2);
+        Reveal.addEventListener('fragmentshown', function (event) {
+          if (event.fragment === s1) {
+            embedded.then(function (e) {
+              e.showSlide(96);
+            });
+          }
+          if (event.fragment === s2) {
+            embedded.then(function (e) {
+              e.nextSlide();
+            });
+          }
+        });
+      </script>
+    </section>
+    <section>
+      <h1>BYE CLUE</h1>
+    </section>
+  </div>
+</div>
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      {
+        src: 'lib/js/classList.js', condition: function () {
+        return !document.body.classList;
+      }
+      }
+    ]
+  });
+
+</script>
+</body>
+</html>
