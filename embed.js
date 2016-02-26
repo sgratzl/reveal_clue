@@ -76,3 +76,66 @@ function embedCLUE(parent, server, app, provenanceGraph) {
         new EmbeddedCLUE(parent, url, resolve);
     });
 }
+
+function inlineCLUE(url, app) {
+  var nodes = [].slice.call(document.querySelectorAll('*[data-clue-ws]'));
+  nodes.forEach(function(node) {
+    var ws = node.dataset.clueWs;
+    var curl = node.dataset.clueUrl || url;
+    var capp = node.dataset.clueApp || app;
+    var embed = embedCLUE(node, curl, capp, ws);
+    var slide = node.dataset.clueSlide;
+    var state = node.dataset.clueState;
+
+    if (slide || state) {
+      embed.then(function(e) {
+        if (slide) {
+          e.showSlide(parseInt(slide));
+        } else if (state) {
+          e.jumpToState(parseInt(state));
+        }
+      });
+    }
+
+    var fragments = [].slice.call(node.querySelectorAll('*[data-clue-slide], *[data-clue-state]'));
+    if (fragments.length === 0) {
+      return;
+    }
+    Reveal.addEventListener('fragmentshown', function (event) {
+      if (fragments.indexOf(event.fragment) < 0) {
+        return;
+      }
+      var slide = event.fragment.dataset.clueSlide;
+      var state = event.fragment.dataset.clueState;
+      embed.then(function (e) {
+        if (slide === 'next') {
+          e.nextSlide();
+        } else if (slide === 'previous') {
+          e.previousSlide();
+        } else if (slide) {
+          e.showSlide(parseInt(slide));
+        } else if (state) {
+          e.jumpToState(parseInt(state));
+        }
+      });
+    });
+    Reveal.addEventListener('fragmenthidden', function (event) {
+      if (fragments.indexOf(event.fragment) < 0) {
+        return;
+      }
+      var slide = event.fragment.dataset.clueSlide;
+      var state = event.fragment.dataset.clueState;
+      embed.then(function (e) {
+        if (slide === 'next') {
+          e.previousSlide();
+        } else if (slide === 'previous') {
+          e.nextSlide();
+        } else if (slide) {
+          e.showSlide(parseInt(slide));
+        } else if (state) {
+          e.jumpToState(parseInt(state));
+        }
+      });
+    });
+  });
+}

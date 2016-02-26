@@ -23,29 +23,9 @@
     <section>
       <h1>Hello CLUE</h1>
     </section>
-    <section id="clue" style="height: 100%">
-      <script>
-        const base = document.getElementById('clue');
-        const embedded = embedCLUE(base, 'http://demo.caleydo.org/', 'stratomex_js', 'workspaceForStratomexJsIakat');
-        var s1 = document.createElement('b');
-        s1.classList.add('fragment');
-        base.appendChild(s1);
-        var s2 = document.createElement('b');
-        s2.classList.add('fragment');
-        base.appendChild(s2);
-        Reveal.addEventListener('fragmentshown', function (event) {
-          if (event.fragment === s1) {
-            embedded.then(function (e) {
-              e.showSlide(96);
-            });
-          }
-          if (event.fragment === s2) {
-            embedded.then(function (e) {
-              e.nextSlide();
-            });
-          }
-        });
-      </script>
+    <section id="clue" style="height: 100%" data-clue-url="http://demo.caleydo.org/" data-clue-app="stratomex_js" data-clue-ws="workspaceForStratomexJsIakat" data-clue-slide="96">
+      <span class="fragment" data-clue-slide="next"></span>
+      <span class="fragment" data-clue-slide="next"></span>
     </section>
     <section>
       <h1>BYE CLUE</h1>
@@ -60,8 +40,8 @@
     progress: true,
     history: true,
     center: true,
-	
-	width: 1920,
+
+	   width: 1920,
     height: 1080,
 
     transition: 'slide', // none/fade/slide/convex/concave/zoom
@@ -76,6 +56,7 @@
     ]
   });
 
+  inlineCLUE();
 </script>
 </body>
 </html>
